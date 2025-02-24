@@ -4,10 +4,16 @@ import Image from 'next/image';
 import Header from '../componentes/header';
 
 const App = () => {
+  // Función helper para manejar rutas de imágenes
+  const getImagePath = (path) => {
+    const basePath = process.env.NODE_ENV === 'production' ? '/primerizos' : '';
+    return `${basePath}${path}`;
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
-                  {/* Hero Section */}
+      {/* Hero Section */}
       <section className="w-full bg-gradient-to-r from-[#0F2027] via-[#203A43] to-[#2C5364] text-white py-16">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center px-4">
           <div className="md:w-1/2 py-12 md:py-20 space-y-6">
@@ -29,7 +35,7 @@ const App = () => {
           <div className="md:w-1/2 mt-12 md:mt-0 flex justify-center">
             <div className="relative w-full max-w-lg">
               <Image
-                src="/inicio/limpio.jpg"
+                src={getImagePath('/inicio/limpio.jpg')}
                 alt="Familia con bebé"
                 width={600}
                 height={350} 
@@ -72,7 +78,7 @@ const App = () => {
         </div>
       </section>
       
-      {/* Consejos Destacados - MODIFICADO PARA USAR IMÁGENES REDONDAS */}
+      {/* Consejos Destacados */}
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-bold text-center text-[#424242] mb-10">
@@ -112,7 +118,7 @@ const App = () => {
               <div key={index} className="flex flex-col items-center p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
                 <div className="relative w-36 h-36 mb-4 overflow-hidden rounded-full bg-[#FFE6EE]">
                   <Image
-                    src={consejo.image}
+                    src={getImagePath(consejo.image)}
                     alt={consejo.title}
                     fill
                     className="object-cover"
@@ -129,8 +135,9 @@ const App = () => {
           </div>
         </div>
       </section>
-            {/* Sección Adicional - Inspiración */}
-            <section className="py-16 bg-gray-100">
+
+      {/* Sección Adicional - Inspiración */}
+      <section className="py-16 bg-gray-100">
         <div className="max-w-7xl mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-[#424242] mb-6">
             Más que consejos, una comunidad
