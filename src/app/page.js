@@ -5,6 +5,12 @@ import Footer from './componentes/footer';
 import Testimonial from "./inicio/index.jsx";
 
 const App = () => {
+  // Función helper para manejar rutas de imágenes
+  const getImagePath = (path) => {
+    const basePath = process.env.NODE_ENV === 'production' ? '/primerizos' : '';
+    return `${basePath}${path}`;
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
@@ -33,7 +39,7 @@ const App = () => {
           <div className="md:w-1/2 mt-12 md:mt-0">
             <div className="relative w-full aspect-square">
               <Image
-                src="/inicio/family-illustration.jpeg"
+                src={getImagePath('/inicio/family-illustration.jpeg')}
                 alt="Happy family illustration"
                 fill
                 className="object-contain"
@@ -81,7 +87,7 @@ const App = () => {
                 text: 'Entorno envolvente e inolvidable para los usuarios.'
               },
               {
-                icon: '/inicio/icons/clock.svg', // Cambiado el icono duplicado
+                icon: '/inicio/icons/clock.svg',
                 title: 'Aprendizaje Rápido',
                 text: 'Contenido accesible y fácil de digerir en poco tiempo.'
               }
@@ -89,7 +95,7 @@ const App = () => {
               <div key={index} className="flex flex-col items-center p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
                 <div className="bg-[#FF6FB0]/10 p-4 rounded-full mb-4">
                   <Image
-                    src={benefit.icon}
+                    src={getImagePath(benefit.icon)}
                     alt={benefit.title}
                     width={48}
                     height={48}
@@ -129,7 +135,7 @@ const App = () => {
               >
                 <div className="relative h-64">
                   <Image
-                    src={`/inicio/${item}.png`}
+                    src={getImagePath(`/inicio/${item}.png`)}
                     alt={`Módulo ${item}`}
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-300"
