@@ -3,6 +3,12 @@ import React from "react";
 import Image from "next/image";
 
 const Testimonial = () => {
+  // Función helper para manejar rutas de imágenes
+  const getImagePath = (path) => {
+    const basePath = process.env.NODE_ENV === 'production' ? '/primerizos' : '';
+    return `${basePath}${path}`;
+  };
+
   const testimonials = [
     {
       id: 1,
@@ -50,7 +56,7 @@ const Testimonial = () => {
               <div className="flex items-center mb-6">
                 <div className="relative w-16 h-16 mr-4">
                   <Image
-                    src={testimonial.image}
+                    src={getImagePath(testimonial.image)}
                     alt={testimonial.name}
                     width={64}
                     height={64}
