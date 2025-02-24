@@ -4,157 +4,100 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Variables globales */
 :root {
-  --primary-color: #FF6FB0;
-  --primary-hover: #e55a9d;
-  --secondary-color: #824058;
-  --text-color: #424242;
+  --primary: #FF6FB0;
+  --primary-dark: #e55a9d;
+  --secondary: #824058;
+  --secondary-light: #a46372;
 }
 
-/* Estilos para el header */
-.header-container {
-  @apply w-full bg-white shadow-lg transition-all duration-300;
+/* Layout Base */
+.main-container {
+  @apply min-h-screen bg-white;
 }
 
-.header-nav {
-  @apply max-w-7xl mx-auto px-4 py-4 flex flex-col md:flex-row md:items-center md:justify-between;
+/* Header Styles */
+.header {
+  @apply fixed top-0 left-0 right-0 bg-white shadow-md z-50;
 }
 
-.header-logo {
-  @apply flex items-center justify-between md:justify-center;
+.nav-container {
+  @apply max-w-7xl mx-auto px-4 py-3 flex items-center justify-between;
 }
 
-.header-logo img {
+.logo-container {
+  @apply flex-shrink-0 flex items-center;
+}
+
+.logo {
   @apply h-12 w-auto md:h-16 transition-transform duration-300 hover:scale-105;
 }
 
-/* Menú móvil */
-.mobile-menu-button {
-  @apply md:hidden p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100;
-}
-
-.mobile-menu {
-  @apply md:hidden mt-4 transition-all duration-300 ease-in-out;
-}
-
-.mobile-menu-items {
-  @apply flex flex-col space-y-4 pb-4;
-}
-
-/* Navegación principal */
-.nav-links {
-  @apply hidden md:flex items-center space-x-6;
+/* Navigation Menu */
+.nav-menu {
+  @apply hidden md:flex items-center space-x-8;
 }
 
 .nav-link {
-  @apply text-black text-lg font-semibold hover:text-gray-600 transition duration-300 transform hover:scale-105;
+  @apply text-black font-semibold hover:text-[--primary] transition-colors
+         text-base md:text-lg tracking-wide;
 }
 
-/* Botones */
+/* Mobile Menu */
+.mobile-menu-button {
+  @apply md:hidden p-2 rounded-lg hover:bg-gray-100;
+}
+
+.mobile-menu {
+  @apply fixed inset-x-0 top-[60px] bg-white shadow-lg md:hidden
+         transform transition-transform duration-300 ease-in-out;
+}
+
+.mobile-menu.open {
+  @apply translate-y-0;
+}
+
+.mobile-menu.closed {
+  @apply -translate-y-full;
+}
+
+.mobile-nav-items {
+  @apply flex flex-col py-4 px-6 space-y-4;
+}
+
+/* Buttons */
 .button-primary {
-  @apply bg-[--primary-color] text-white px-4 py-2 rounded-md text-sm font-semibold 
-         hover:bg-[--primary-hover] transition-all duration-300 transform hover:scale-105;
+  @apply bg-[--primary] text-white px-4 py-2 rounded-lg font-semibold
+         hover:bg-[--primary-dark] transition-all duration-300
+         text-sm md:text-base;
 }
 
 .button-secondary {
-  @apply bg-blue-500 text-white px-4 py-2 rounded-md text-lg font-semibold 
-         hover:bg-blue-600 transition-all duration-300 transform hover:scale-105;
+  @apply bg-blue-500 text-white px-4 py-2 rounded-lg font-semibold
+         hover:bg-blue-600 transition-all duration-300
+         text-sm md:text-base;
 }
 
-/* Usuario logueado */
-.user-menu {
-  @apply relative group;
+/* Footer Styles */
+.footer {
+  @apply bg-gradient-to-r from-[--secondary] to-[--secondary-light] 
+         mt-20 py-12 text-white;
 }
-
-.user-button {
-  @apply w-10 h-10 rounded-full bg-[--primary-color] text-white flex items-center justify-center 
-         text-lg font-semibold hover:bg-[--primary-hover] transition-colors;
-}
-
-.user-dropdown {
-  @apply absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg 
-         opacity-0 invisible group-hover:opacity-100 group-hover:visible 
-         transition-all duration-300 z-50;
-}
-
-/* Modal de calificación */
-.rating-modal-overlay {
-  @apply fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4;
-}
-
-.rating-modal {
-  @apply bg-white rounded-lg p-6 md:p-8 max-w-md w-full max-h-[90vh] overflow-y-auto;
-}
-
-.rating-form {
-  @apply space-y-4;
-}
-
-.form-group {
-  @apply space-y-2;
-}
-
-.form-label {
-  @apply block text-gray-700 text-sm font-medium;
-}
-
-.form-input {
-  @apply w-full border rounded-md p-2 focus:ring-2 focus:ring-[--primary-color] focus:border-transparent;
-}
-
-.form-error {
-  @apply text-red-500 text-sm mt-1;
-}
-
-/* Media queries para diferentes tamaños de pantalla */
-@media (max-width: 768px) {
-  .header-nav {
-    @apply py-2;
-  }
-  
-  .nav-link {
-    @apply text-base;
-  }
-}
-
-@media (max-width: 640px) {
-  .header-logo img {
-    @apply h-10;
-  }
-  
-  .button-primary, .button-secondary {
-    @apply text-sm px-3 py-1;
-  }
-}
-/* Estilos del Footer - Agregar esto al globals.css existente */
 
 .footer-container {
-  @apply w-full bg-gradient-to-r from-[#824058] to-[#a46372] mt-10 md:mt-20;
-}
-
-.footer-content {
-  @apply max-w-7xl mx-auto px-4 py-8 md:py-12;
+  @apply max-w-7xl mx-auto px-4;
 }
 
 .footer-grid {
-  @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-white;
-}
-
-.footer-column {
-  @apply space-y-4;
+  @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12;
 }
 
 .footer-title {
-  @apply text-xl md:text-2xl font-bold text-[#FF6FB0];
+  @apply text-xl md:text-2xl font-bold text-[--primary] mb-4;
 }
 
-.footer-subtitle {
-  @apply text-lg font-semibold text-[#FF6FB0];
-}
-
-.footer-text {
-  @apply text-sm md:text-base opacity-90;
+.footer-content {
+  @apply space-y-3 text-sm md:text-base;
 }
 
 .footer-links {
@@ -162,49 +105,40 @@
 }
 
 .footer-link {
-  @apply hover:text-[#FF6FB0] transition-colors text-sm md:text-base;
-}
-
-.contact-info {
-  @apply space-y-3;
-}
-
-.contact-item {
-  @apply flex items-center gap-2 text-sm md:text-base;
-}
-
-.contact-icon {
-  @apply w-4 h-4 md:w-5 md:h-5;
+  @apply hover:text-[--primary] transition-colors block;
 }
 
 .social-links {
-  @apply flex space-x-4;
-}
-
-.social-link {
-  @apply p-2 rounded-full bg-[#FF6FB0] hover:bg-[#e55a9d] transition-colors transform hover:scale-110;
+  @apply flex space-x-4 mt-4;
 }
 
 .social-icon {
-  @apply w-5 h-5 md:w-6 md:h-6;
+  @apply p-2 rounded-full bg-[--primary] hover:bg-[--primary-dark] 
+         transition-all duration-300 transform hover:scale-110;
 }
 
-.footer-divider {
-  @apply border-t border-[#FF6FB0]/30 my-6 md:my-8;
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .nav-container {
+    @apply py-2;
+  }
+  
+  .logo {
+    @apply h-10;
+  }
+  
+  .button-primary, .button-secondary {
+    @apply px-3 py-1.5 text-sm;
+  }
 }
 
-.footer-copyright {
-  @apply text-center text-xs md:text-sm opacity-75 text-white;
-}
-
-/* Ajustes responsivos adicionales */
 @media (max-width: 640px) {
   .footer-grid {
     @apply gap-6;
   }
   
-  .footer-column {
-    @apply space-y-3;
+  .footer-title {
+    @apply text-lg mb-3;
   }
   
   .social-links {
