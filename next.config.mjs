@@ -3,11 +3,8 @@ const nextConfig = {
     output: 'export',
     images: {
         unoptimized: true,
-        loader: 'akamai',
-        path: '',
     },
-    basePath: '/primerizos',
-    assetPrefix: '/primerizos/',
+    assetPrefix: './',
     trailingSlash: true,
 };
 
