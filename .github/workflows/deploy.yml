@@ -23,11 +23,11 @@ jobs:
       - name: 📦 Install dependencies
         run: npm install
 
-- name: 🏗️ Build Next.js project
-  run: npm run build
+      - name: 🏗️ Build Next.js project
+        run: npm run build
 
       - name: 🚀 Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
+        uses: peaceiris/actions-gh-pages@v3  # Cambiado de v4 a v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./out
