@@ -3,9 +3,12 @@ const nextConfig = {
     output: 'export',
     images: {
         unoptimized: true,
+        loader: 'akamai',
+        path: '',
     },
-    basePath: process.env.NODE_ENV === 'production' ? '/primerizos' : '',
-    assetPrefix: process.env.NODE_ENV === 'production' ? '/primerizos/' : '',
+    basePath: '/primerizos',
+    assetPrefix: '/primerizos/',
+    trailingSlash: true,
 };
 
 export default nextConfig;
