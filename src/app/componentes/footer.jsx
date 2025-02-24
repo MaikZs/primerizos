@@ -1,16 +1,13 @@
-// components/Footer.js
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
 const Footer = () => {
-  // Función helper para manejar rutas de imágenes
   const getImagePath = (path) => {
     const basePath = process.env.NODE_ENV === 'production' ? '/primerizos' : '';
     return `${basePath}${path}`;
   };
 
-  // Redes sociales con URLs y rutas de imágenes
   const redesSociales = [
     { 
       name: 'facebook', 
@@ -34,26 +31,35 @@ const Footer = () => {
     }
   ];
 
+  const quickLinks = [
+    'Inicio',
+    'Modulos',
+    'Consejos Rapidos',
+    'Contacto',
+    'Libro de Reclamaciones'
+  ];
+
   return (
-    <footer className="w-full bg-gradient-to-r from-[#824058] to-[#a46372] mt-20">
-      <div className="max-w-7xl mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 text-white">
+    <footer className="footer-container">
+      <div className="footer-content">
+        <div className="footer-grid">
           
           {/* Columna 1: Logo y descripción */}
-          <div className="space-y-4">
-            <h3 className="text-2xl font-bold text-[#FF6FB0]">BabyCare</h3>
-            <p className="text-sm opacity-90">
-              Tu compañero esencial en la aventura de la paternidad. Ofrecemos recursos prácticos y cursos accesibles para padres primerizos.
+          <div className="footer-column">
+            <h3 className="footer-title">BabyCare</h3>
+            <p className="footer-text">
+              Tu compañero esencial en la aventura de la paternidad. Ofrecemos recursos prácticos 
+              y cursos accesibles para padres primerizos.
             </p>
           </div>
 
           {/* Columna 2: Enlaces rápidos */}
-          <div className="space-y-4">
-            <h4 className="text-lg font-semibold text-[#FF6FB0]">Enlaces Rápidos</h4>
-            <ul className="space-y-2">
-              {['Inicio', 'Modulos', 'Consejos Rapidos', 'Contacto', 'Libro de Reclamaciones'].map((link) => (
+          <div className="footer-column">
+            <h4 className="footer-subtitle">Enlaces Rápidos</h4>
+            <ul className="footer-links">
+              {quickLinks.map((link) => (
                 <li key={link}>
-                  <Link href="#" className="hover:text-[#FF6FB0] transition-colors">
+                  <Link href="#" className="footer-link">
                     {link}
                   </Link>
                 </li>
@@ -62,33 +68,36 @@ const Footer = () => {
           </div>
 
           {/* Columna 3: Contacto */}
-          <div className="space-y-4">
-            <h4 className="text-lg font-semibold text-[#FF6FB0]">Contacto</h4>
-            <div className="space-y-2">
-              <p className="flex items-center gap-2">
+          <div className="footer-column">
+            <h4 className="footer-subtitle">Contacto</h4>
+            <div className="contact-info">
+              <p className="contact-item">
                 <Image
                   src={getImagePath('/incons/email.svg')}
                   alt="Email"
                   width={20}
                   height={20}
+                  className="contact-icon"
                 />
                 info@babycare.com
               </p>
-              <p className="flex items-center gap-2">
+              <p className="contact-item">
                 <Image
                   src={getImagePath('/incons/telefono.svg')}
                   alt="Teléfono"
                   width={20}
                   height={20}
+                  className="contact-icon"
                 />
                 +51 987 654 321 
               </p>
-              <p className="flex items-center gap-2">
+              <p className="contact-item">
                 <Image
                   src={getImagePath('/incons/location.svg')}
                   alt="Ubicación"
                   width={20}
                   height={20}
+                  className="contact-icon"
                 />
                 Distrito Miraflores, Lima-Perú
               </p>
@@ -96,22 +105,23 @@ const Footer = () => {
           </div>
 
           {/* Columna 4: Redes Sociales */}
-          <div className="space-y-4">
-            <h4 className="text-lg font-semibold text-[#FF6FB0]">Síguenos</h4>
-            <div className="flex space-x-4">
+          <div className="footer-column">
+            <h4 className="footer-subtitle">Síguenos</h4>
+            <div className="social-links">
               {redesSociales.map((social) => (
                 <a
                   key={social.name}
                   href={social.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-2 rounded-full bg-[#FF6FB0] hover:bg-[#e55a9d] transition-colors"
+                  className="social-link"
                 >
                   <Image
                     src={getImagePath(social.icon)}
                     alt={`Icono ${social.name}`}
                     width={24}
                     height={24}
+                    className="social-icon"
                   />
                 </a>
               ))}
@@ -120,13 +130,15 @@ const Footer = () => {
         </div>
 
         {/* Divisor */}
-        <div className="border-t border-[#FF6FB0]/30 my-8" />
+        <div className="footer-divider" />
 
         {/* Copyright */}
-        <div className="text-center text-sm opacity-75">
+        <div className="footer-copyright">
           <p>
             © {new Date().getFullYear()} BabyCare. Todos los derechos reservados. | 
-            <Link href="#" className="hover:text-[#FF6FB0] ml-2">Política de Privacidad</Link>
+            <Link href="#" className="hover:text-[#FF6FB0] ml-2">
+              Política de Privacidad
+            </Link>
           </p>
         </div>
       </div>
