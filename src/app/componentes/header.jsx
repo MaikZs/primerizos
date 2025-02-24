@@ -7,6 +7,13 @@ import { collection, addDoc } from 'firebase/firestore';
 import { db } from '../firebase'; // Importamos directamente la instancia de Firestore
 
 const Header = () => {
+
+    const getImagePath = (path) => {
+        const basePath = process.env.NODE_ENV === 'production' ? '/primerizos' : '';
+        return `${basePath}${path}`;
+    };
+
+    
     const [user, setUser] = useState(null);
     const [showRatingModal, setShowRatingModal] = useState(false);
     const [formData, setFormData] = useState({
@@ -135,12 +142,12 @@ const Header = () => {
                 {/* Logo */}
                 <Link href="/" className="flex-shrink-0">
                     <Image
-                        src="/inicio/logo.png"
+                        src={getImagePath('/inicio/logo.png')}
                         alt="Baby Life"
                         width={128}
                         height={128}
-                        priority 
                         quality={100}
+                        priority
                         className="h-16 w-auto"
                     />
                 </Link>
