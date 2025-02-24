@@ -3,16 +3,9 @@ const nextConfig = {
     output: 'export',
     images: {
         unoptimized: true,
-        remotePatterns: [
-            {
-                protocol: 'https',
-                hostname: '**',
-            },
-        ],
-        domains: ['maikzs.github.io'],
     },
-    basePath: '/primerizos',
-    assetPrefix: '/primerizos',
+    basePath: process.env.NODE_ENV === 'production' ? '/primerizos' : '',
+    assetPrefix: process.env.NODE_ENV === 'production' ? '/primerizos/' : '',
 };
 
 export default nextConfig;
