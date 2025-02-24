@@ -4,15 +4,16 @@ import React, { useState, useEffect } from 'react';
 import Link from "next/link";
 import Image from "next/image";
 import { collection, addDoc } from 'firebase/firestore';
-import { db } from '../firebase'; // Importamos directamente la instancia de Firestore
+import { db } from '../firebase';
+import { signOut } from 'firebase/auth';
+import { auth } from '../firebase/firebase.config';
 
 const Header = () => {
-
-        // Función helper para manejar rutas de imágenes
     const getImagePath = (path) => {
         const basePath = process.env.NODE_ENV === 'production' ? '/primerizos' : '';
         return `${basePath}${path}`;
     };
+
     const [user, setUser] = useState(null);
     const [showRatingModal, setShowRatingModal] = useState(false);
     const [formData, setFormData] = useState({
@@ -43,12 +44,21 @@ const Header = () => {
         }
     }, [showRatingModal, user]);
 
-    const handleSignOut = () => {
-        localStorage.removeItem('userName');
-        localStorage.removeItem('userEmail');
-        localStorage.removeItem('userPhoto');
-        setUser(null);
-        window.location.href = '/';
+    const handleSignOut = async () => {
+        try {
+            await signOut(auth);
+            localStorage.removeItem('userName');
+            localStorage.removeItem('userEmail');
+            localStorage.removeItem('userPhoto');
+            setUser(null);
+            const basePath = process.env.NODE_ENV === 'production' 
+                ? '/primerizos/' 
+                : '/';
+            window.location.href = basePath;
+        } catch (error) {
+            console.error('Error al cerrar sesión:', error);
+            alert('Error al cerrar sesión. Por favor, intenta de nuevo.');
+        }
     };
 
     const validateForm = () => {
@@ -78,7 +88,6 @@ const Header = () => {
         if (Object.keys(errors).length === 0) {
             setIsSubmitting(true);
             try {
-                // Preparar los datos para Firestore
                 const ratingData = {
                     ...formData,
                     timestamp: new Date(),
@@ -86,10 +95,8 @@ const Header = () => {
                     puntaje: parseInt(formData.puntaje)
                 };
 
-                // Guardar en Firestore
                 await addDoc(collection(db, 'ratings'), ratingData);
                 
-                // Limpiar el formulario y cerrar el modal
                 setShowRatingModal(false);
                 setFormData({ nombre: '', edad: '', sexo: '', puntaje: '' });
                 alert('¡Gracias por tu calificación!');
@@ -125,20 +132,18 @@ const Header = () => {
     return (
         <header className="w-full px-8 py-6 bg-white shadow-lg">
             <nav className="max-w-7xl mx-auto flex items-center justify-between">
-                {/* Left Section */}
                 <div className="flex space-x-6">
-    <Link href="/" className="text-black text-lg font-semibold hover:text-gray-200 transition duration-300 ease-in-out transform hover:scale-110">
-        INICIO
-    </Link>
-    <Link href="/modulos" className="text-black text-lg font-semibold hover:text-gray-200 transition duration-300 ease-in-out transform hover:scale-110">
-        MODULOS
-    </Link>
-    <Link href="/valoracion" className="text-black text-lg font-semibold hover:text-gray-200 transition duration-300 ease-in-out transform hover:scale-110">
-        VALORACIÓN
-    </Link>
-</div>
+                    <Link href="/" className="text-black text-lg font-semibold hover:text-gray-200 transition duration-300 ease-in-out transform hover:scale-110">
+                        INICIO
+                    </Link>
+                    <Link href="/modulos" className="text-black text-lg font-semibold hover:text-gray-200 transition duration-300 ease-in-out transform hover:scale-110">
+                        MODULOS
+                    </Link>
+                    <Link href="/valoracion" className="text-black text-lg font-semibold hover:text-gray-200 transition duration-300 ease-in-out transform hover:scale-110">
+                        VALORACIÓN
+                    </Link>
+                </div>
 
-                {/* Logo */}
                 <Link href="/" className="flex-shrink-0">
                     <Image
                         src={getImagePath('/inicio/logo.png')}
@@ -151,7 +156,6 @@ const Header = () => {
                     />
                 </Link>
 
-                {/* Right Section */}
                 <div className="flex space-x-6 items-center">
                     <Link href="/consejosRapidos" className="text-black text-lg font-semibold hover:text-gray-200 transition duration-300 ease-in-out transform hover:scale-110">
                         CONSEJO RÁPIDO
@@ -197,7 +201,6 @@ const Header = () => {
                 </div>
             </nav>
 
-            {/* Modal de Calificación */}
             {showRatingModal && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
                     <div className="bg-white rounded-lg p-8 max-w-md w-full">
