@@ -39,9 +39,19 @@ const ValoracionPage = () => {
                     const puntajeMinimo = Math.min(...puntajes);
                     const puntajeMaximo = Math.max(...puntajes);
 
-                    // Distribución por edad
+                    // Nueva distribución por 5 rangos de edad
                     const distribucionEdad = ratings.reduce((acc, curr) => {
-                        acc[curr.edad] = (acc[curr.edad] || 0) + 1;
+                        if (curr.edad <= 25) {
+                            acc['18-25'] = (acc['18-25'] || 0) + 1;
+                        } else if (curr.edad <= 35) {
+                            acc['26-35'] = (acc['26-35'] || 0) + 1;
+                        } else if (curr.edad <= 45) {
+                            acc['36-45'] = (acc['36-45'] || 0) + 1;
+                        } else if (curr.edad <= 55) {
+                            acc['46-55'] = (acc['46-55'] || 0) + 1;
+                        } else {
+                            acc['56+'] = (acc['56+'] || 0) + 1;
+                        }
                         return acc;
                     }, {});
 
@@ -131,22 +141,19 @@ const ValoracionPage = () => {
                             </div>
                         </div>
 
-                        {/* Distribución por Edad */}
+                        {/* Distribución por Edad Modificada */}
                         <div className="bg-white rounded-lg shadow-lg p-6">
                             <h3 className="text-lg font-semibold text-gray-800 mb-4">
                                 Distribución por Edad
                             </h3>
-                            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
-                                {Object.entries(stats.distribucionEdad)
-                                    .sort(([a], [b]) => parseInt(a) - parseInt(b))
-                                    .map(([edad, cantidad]) => (
-                                        <div key={edad} className="bg-gray-50 rounded p-4">
-                                            <p className="text-lg font-semibold text-[#FF6FB0]">{edad} años</p>
-                                            <p className="text-2xl font-bold">{cantidad}</p>
-                                            <p className="text-sm text-gray-600">personas</p>
-                                        </div>
-                                    ))
-                                }
+                            <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+                                {Object.entries(stats.distribucionEdad).map(([rango, cantidad]) => (
+                                    <div key={rango} className="bg-gray-50 rounded p-4 text-center">
+                                        <p className="text-lg font-semibold text-[#FF6FB0]">{rango} años</p>
+                                        <p className="text-2xl font-bold">{cantidad}</p>
+                                        <p className="text-sm text-gray-600">personas</p>
+                                    </div>
+                                ))}
                             </div>
                         </div>
                     </div>
