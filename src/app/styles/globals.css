@@ -1,1 +1,129 @@
+/* src/app/styles/globals.css */
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Variables globales */
+:root {
+  --primary-color: #FF6FB0;
+  --primary-hover: #e55a9d;
+  --secondary-color: #824058;
+  --text-color: #424242;
+}
+
+/* Estilos para el header */
+.header-container {
+  @apply w-full bg-white shadow-lg transition-all duration-300;
+}
+
+.header-nav {
+  @apply max-w-7xl mx-auto px-4 py-4 flex flex-col md:flex-row md:items-center md:justify-between;
+}
+
+.header-logo {
+  @apply flex items-center justify-between md:justify-center;
+}
+
+.header-logo img {
+  @apply h-12 w-auto md:h-16 transition-transform duration-300 hover:scale-105;
+}
+
+/* Menú móvil */
+.mobile-menu-button {
+  @apply md:hidden p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100;
+}
+
+.mobile-menu {
+  @apply md:hidden mt-4 transition-all duration-300 ease-in-out;
+}
+
+.mobile-menu-items {
+  @apply flex flex-col space-y-4 pb-4;
+}
+
+/* Navegación principal */
+.nav-links {
+  @apply hidden md:flex items-center space-x-6;
+}
+
+.nav-link {
+  @apply text-black text-lg font-semibold hover:text-gray-600 transition duration-300 transform hover:scale-105;
+}
+
+/* Botones */
+.button-primary {
+  @apply bg-[--primary-color] text-white px-4 py-2 rounded-md text-sm font-semibold 
+         hover:bg-[--primary-hover] transition-all duration-300 transform hover:scale-105;
+}
+
+.button-secondary {
+  @apply bg-blue-500 text-white px-4 py-2 rounded-md text-lg font-semibold 
+         hover:bg-blue-600 transition-all duration-300 transform hover:scale-105;
+}
+
+/* Usuario logueado */
+.user-menu {
+  @apply relative group;
+}
+
+.user-button {
+  @apply w-10 h-10 rounded-full bg-[--primary-color] text-white flex items-center justify-center 
+         text-lg font-semibold hover:bg-[--primary-hover] transition-colors;
+}
+
+.user-dropdown {
+  @apply absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg 
+         opacity-0 invisible group-hover:opacity-100 group-hover:visible 
+         transition-all duration-300 z-50;
+}
+
+/* Modal de calificación */
+.rating-modal-overlay {
+  @apply fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4;
+}
+
+.rating-modal {
+  @apply bg-white rounded-lg p-6 md:p-8 max-w-md w-full max-h-[90vh] overflow-y-auto;
+}
+
+.rating-form {
+  @apply space-y-4;
+}
+
+.form-group {
+  @apply space-y-2;
+}
+
+.form-label {
+  @apply block text-gray-700 text-sm font-medium;
+}
+
+.form-input {
+  @apply w-full border rounded-md p-2 focus:ring-2 focus:ring-[--primary-color] focus:border-transparent;
+}
+
+.form-error {
+  @apply text-red-500 text-sm mt-1;
+}
+
+/* Media queries para diferentes tamaños de pantalla */
+@media (max-width: 768px) {
+  .header-nav {
+    @apply py-2;
+  }
+  
+  .nav-link {
+    @apply text-base;
+  }
+}
+
+@media (max-width: 640px) {
+  .header-logo img {
+    @apply h-10;
+  }
+  
+  .button-primary, .button-secondary {
+    @apply text-sm px-3 py-1;
+  }
+}
