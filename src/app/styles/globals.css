@@ -127,3 +127,87 @@
     @apply text-sm px-3 py-1;
   }
 }
+/* Estilos del Footer - Agregar esto al globals.css existente */
+
+.footer-container {
+  @apply w-full bg-gradient-to-r from-[#824058] to-[#a46372] mt-10 md:mt-20;
+}
+
+.footer-content {
+  @apply max-w-7xl mx-auto px-4 py-8 md:py-12;
+}
+
+.footer-grid {
+  @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-white;
+}
+
+.footer-column {
+  @apply space-y-4;
+}
+
+.footer-title {
+  @apply text-xl md:text-2xl font-bold text-[#FF6FB0];
+}
+
+.footer-subtitle {
+  @apply text-lg font-semibold text-[#FF6FB0];
+}
+
+.footer-text {
+  @apply text-sm md:text-base opacity-90;
+}
+
+.footer-links {
+  @apply space-y-2;
+}
+
+.footer-link {
+  @apply hover:text-[#FF6FB0] transition-colors text-sm md:text-base;
+}
+
+.contact-info {
+  @apply space-y-3;
+}
+
+.contact-item {
+  @apply flex items-center gap-2 text-sm md:text-base;
+}
+
+.contact-icon {
+  @apply w-4 h-4 md:w-5 md:h-5;
+}
+
+.social-links {
+  @apply flex space-x-4;
+}
+
+.social-link {
+  @apply p-2 rounded-full bg-[#FF6FB0] hover:bg-[#e55a9d] transition-colors transform hover:scale-110;
+}
+
+.social-icon {
+  @apply w-5 h-5 md:w-6 md:h-6;
+}
+
+.footer-divider {
+  @apply border-t border-[#FF6FB0]/30 my-6 md:my-8;
+}
+
+.footer-copyright {
+  @apply text-center text-xs md:text-sm opacity-75 text-white;
+}
+
+/* Ajustes responsivos adicionales */
+@media (max-width: 640px) {
+  .footer-grid {
+    @apply gap-6;
+  }
+  
+  .footer-column {
+    @apply space-y-3;
+  }
+  
+  .social-links {
+    @apply justify-center;
+  }
+}
