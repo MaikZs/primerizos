@@ -8,11 +8,6 @@ import { db } from '../firebase'; // Importamos directamente la instancia de Fir
 
 const Header = () => {
 
-    const getImagePath = (path) => {
-        const basePath = process.env.NODE_ENV === 'production' ? '/primerizos' : '';
-        return `${basePath}${path}`;
-    };
-
     
     const [user, setUser] = useState(null);
     const [showRatingModal, setShowRatingModal] = useState(false);
@@ -142,12 +137,11 @@ const Header = () => {
                 {/* Logo */}
                 <Link href="/" className="flex-shrink-0">
                     <Image
-                        src={getImagePath('/inicio/logo.png')}
+                        src="/inicio/logo.png"
                         alt="Baby Life"
                         width={128}
                         height={128}
                         quality={100}
-                        priority
                         className="h-16 w-auto"
                     />
                 </Link>
