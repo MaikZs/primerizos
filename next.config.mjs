@@ -3,9 +3,16 @@ const nextConfig = {
     output: 'export',
     images: {
         unoptimized: true,
-        loader: 'custom',
-        loaderFile: './src/loader.js',
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: '**',
+            },
+        ],
+        domains: ['maikzs.github.io'],
     },
+    basePath: '/primerizos',
+    assetPrefix: '/primerizos',
 };
 
 export default nextConfig;
