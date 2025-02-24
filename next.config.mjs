@@ -3,9 +3,9 @@ const nextConfig = {
     output: 'export',
     images: {
         unoptimized: true,
+        loader: 'custom',
+        loaderFile: './image-loader.js',
     },
-    basePath: '/primerizos',
-    assetPrefix: '/primerizos',
 };
 
 export default nextConfig;
