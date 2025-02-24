@@ -4,6 +4,12 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 const Footer = () => {
+  // Función helper para manejar rutas de imágenes
+  const getImagePath = (path) => {
+    const basePath = process.env.NODE_ENV === 'production' ? '/primerizos' : '';
+    return `${basePath}${path}`;
+  };
+
   // Redes sociales con URLs y rutas de imágenes
   const redesSociales = [
     { 
@@ -61,7 +67,7 @@ const Footer = () => {
             <div className="space-y-2">
               <p className="flex items-center gap-2">
                 <Image
-                  src="/incons/email.svg"  // Ruta ajustada
+                  src={getImagePath('/incons/email.svg')}
                   alt="Email"
                   width={20}
                   height={20}
@@ -70,7 +76,7 @@ const Footer = () => {
               </p>
               <p className="flex items-center gap-2">
                 <Image
-                  src="/incons/telefono.svg"  // Ruta ajustada
+                  src={getImagePath('/incons/telefono.svg')}
                   alt="Teléfono"
                   width={20}
                   height={20}
@@ -79,7 +85,7 @@ const Footer = () => {
               </p>
               <p className="flex items-center gap-2">
                 <Image
-                  src="/incons/location.svg"  // Ruta ajustada
+                  src={getImagePath('/incons/location.svg')}
                   alt="Ubicación"
                   width={20}
                   height={20}
@@ -102,7 +108,7 @@ const Footer = () => {
                   className="p-2 rounded-full bg-[#FF6FB0] hover:bg-[#e55a9d] transition-colors"
                 >
                   <Image
-                    src={social.icon}  // Usamos la ruta específica del objeto
+                    src={getImagePath(social.icon)}
                     alt={`Icono ${social.name}`}
                     width={24}
                     height={24}
