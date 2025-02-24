@@ -139,6 +139,7 @@ const Header = () => {
                         alt="Baby Life"
                         width={128}
                         height={128}
+                        priority 
                         quality={100}
                         className="h-16 w-auto"
                     />
