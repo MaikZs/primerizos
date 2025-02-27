@@ -7,15 +7,12 @@ import { collection, addDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 import { signOut } from 'firebase/auth';
 import { auth } from '../firebase/firebase.config';
+import '@/app/styles/header.css';
 
 const Header = () => {
-    const getImagePath = (path) => {
-        const basePath = process.env.NODE_ENV === 'production' ? '/primerizos' : '';
-        return `${basePath}${path}`;
-    };
-
     const [user, setUser] = useState(null);
     const [showRatingModal, setShowRatingModal] = useState(false);
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [formData, setFormData] = useState({
         nombre: '',
         edad: '',
@@ -43,6 +40,19 @@ const Header = () => {
             }));
         }
     }, [showRatingModal, user]);
+
+    // Bloquear scroll cuando el menú móvil está abierto
+    useEffect(() => {
+        if (mobileMenuOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+        }
+        
+        return () => {
+            document.body.style.overflow = '';
+        };
+    }, [mobileMenuOpen]);
 
     const handleSignOut = async () => {
         try {
@@ -101,12 +111,8 @@ const Header = () => {
                 setFormData({ nombre: '', edad: '', sexo: '', puntaje: '' });
                 alert('¡Gracias por tu calificación!');
             } catch (error) {
-                console.error('Error detallado:', {
-                    message: error.message,
-                    code: error.code,
-                    stack: error.stack
-                });
-                alert(`Error al guardar: ${error.message}. Por favor, verifica la conexión a Firestore.`);
+                console.error('Error al guardar:', error);
+                alert(`Error al guardar: ${error.message}`);
             } finally {
                 setIsSubmitting(false);
             }
@@ -130,126 +136,212 @@ const Header = () => {
     };
 
     return (
-        <header className="w-full px-8 py-6 bg-white shadow-lg">
-            <nav className="max-w-7xl mx-auto flex items-center justify-between">
-                <div className="flex space-x-6">
-                    <Link href="/" className="text-black text-lg font-semibold hover:text-gray-200 transition duration-300 ease-in-out transform hover:scale-110">
-                        INICIO
-                    </Link>
-                    <Link href="/modulos" className="text-black text-lg font-semibold hover:text-gray-200 transition duration-300 ease-in-out transform hover:scale-110">
-                        MODULOS
-                    </Link>
-                    <Link href="/valoracion" className="text-black text-lg font-semibold hover:text-gray-200 transition duration-300 ease-in-out transform hover:scale-110">
-                        VALORACIÓN
+        <header className="navbar">
+            <div className="menu-container">
+                <div className="menu-top">
+                    <div className="menu-links">
+                        <Link href="/" className="menu-link">INICIO</Link>
+                        <Link href="/modulos" className="menu-link">MODULOS</Link>
+                        <Link href="/valoracion" className="menu-link">VALORACIÓN</Link>
+                    </div>
+
+                    <div className="menu-logo">
+                        <Link href="/">
+                            <Image 
+                                src="/inicio/logo.png" 
+                                alt="Baby Life" 
+                                width={100} 
+                                height={40} 
+                                className="logo"
+                            />
+                        </Link>
+                    </div>
+
+                    <div className="menu-links">
+                        <Link href="/consejosRapidos" className="menu-link">CONSEJO RÁPIDO</Link>
+                        <Link href="/contacto" className="menu-link">CONTACTO</Link>
+                        <button 
+                            className="rate-button" 
+                            onClick={() => setShowRatingModal(true)}
+                        >
+                            Calificar App
+                        </button>
+                        {!user ? (
+                            <Link href="/login" className="login-button">
+                                LOGIN
+                            </Link>
+                        ) : (
+                            <button 
+                                className="user-button" 
+                                onClick={handleSignOut}
+                            >
+                                {user.initial}
+                            </button>
+                        )}
+                    </div>
+                </div>
+            </div>
+
+            {/* Versión móvil */}
+            <div className="mobile-menu-container">
+                <button 
+                    className="mobile-rate-button" 
+                    onClick={() => setShowRatingModal(true)}
+                >
+                    Calificar App
+                </button>
+
+                <div className="mobile-logo">
+                    <Link href="/">
+                        <Image 
+                            src="/inicio/logo.png" 
+                            alt="Baby Life" 
+                            width={100} 
+                            height={40} 
+                            className="logo"
+                        />
                     </Link>
                 </div>
 
-                <Link href="/" className="flex-shrink-0">
-                    <Image
-                        src={getImagePath('/inicio/logo.png')}
-                        alt="Baby Life"
-                        width={128}
-                        height={128}
-                        quality={100}
-                        priority
-                        className="h-16 w-auto"
-                    />
-                </Link>
+                <button 
+                    className="hamburger-button"
+                    onClick={() => setMobileMenuOpen(true)}
+                    aria-label="Abrir menú"
+                >
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
 
-                <div className="flex space-x-6 items-center">
-                    <Link href="/consejosRapidos" className="text-black text-lg font-semibold hover:text-gray-200 transition duration-300 ease-in-out transform hover:scale-110">
+      
+            <div className={`slide-menu-overlay ${mobileMenuOpen ? 'active' : ''}`} onClick={() => setMobileMenuOpen(false)}></div>
+            
+            <div className={`slide-menu ${mobileMenuOpen ? 'active' : ''}`}>
+                <div className="slide-menu-header">
+                    <Link href="/" onClick={() => setMobileMenuOpen(false)}>
+                        <Image 
+                            src="/inicio/logo.png" 
+                            alt="Baby Life" 
+                            width={100} 
+                            height={40} 
+                            className="logo"
+                        />
+                    </Link>
+                    <button 
+                        className="close-menu"
+                        onClick={() => setMobileMenuOpen(false)}
+                        aria-label="Cerrar menú"
+                    >
+                        ✕
+                    </button>
+                </div>
+                
+                <nav className="slide-menu-nav">
+                    <Link href="/" className="slide-menu-link" onClick={() => setMobileMenuOpen(false)}>
+                        INICIO
+                    </Link>
+                    <Link href="/modulos" className="slide-menu-link" onClick={() => setMobileMenuOpen(false)}>
+                        MODULOS
+                    </Link>
+                    <Link href="/valoracion" className="slide-menu-link" onClick={() => setMobileMenuOpen(false)}>
+                        VALORACIÓN
+                    </Link>
+                    <Link href="/consejosRapidos" className="slide-menu-link" onClick={() => setMobileMenuOpen(false)}>
                         CONSEJO RÁPIDO
                     </Link>
-                    <Link href="/contacto" className="text-black text-lg font-semibold hover:text-gray-200 transition duration-300 ease-in-out transform hover:scale-110">
+                    <Link href="/contacto" className="slide-menu-link" onClick={() => setMobileMenuOpen(false)}>
                         CONTACTO
                     </Link>
-
-                    <button
-                        onClick={() => setShowRatingModal(true)}
-                        className="bg-[#FF6FB0] text-white px-4 py-2 rounded-md text-sm font-semibold hover:bg-[#e55a9d] transition-all duration-300"
+                </nav>
+                
+                <div className="slide-menu-footer">
+                    <button 
+                        className="slide-menu-button rate"
+                        onClick={() => {
+                            setShowRatingModal(true);
+                            setMobileMenuOpen(false);
+                        }}
                     >
                         Calificar App
                     </button>
-
+                    
                     {!user ? (
-                        <Link
-                            href="/login"
-                            className="bg-blue-500 text-white px-4 py-2 rounded-md text-lg font-semibold hover:bg-blue-600 transition duration-300 ease-in-out transform hover:scale-105"
+                        <Link 
+                            href="/login" 
+                            className="slide-menu-button login"
+                            onClick={() => setMobileMenuOpen(false)}
                         >
                             LOGIN
                         </Link>
                     ) : (
-                        <div className="relative group">
-                            <button className="w-10 h-10 rounded-full bg-[#FF6FB0] text-white flex items-center justify-center text-lg font-semibold hover:bg-[#e55a9d] transition-colors">
-                                {user.initial}
-                            </button>
-                            <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
-                                <div className="py-1">
-                                    <p className="px-4 py-2 text-sm text-gray-700 border-b">
-                                        {user.name}
-                                    </p>
-                                    <button
-                                        onClick={handleSignOut}
-                                        className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
-                                    >
-                                        Cerrar Sesión
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
+                        <button 
+                            className="slide-menu-button logout"
+                            onClick={() => {
+                                handleSignOut();
+                                setMobileMenuOpen(false);
+                            }}
+                        >
+                            Cerrar Sesión ({user.name})
+                        </button>
                     )}
                 </div>
-            </nav>
+            </div>
 
+            {/* Modal de calificación */}
             {showRatingModal && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                    <div className="bg-white rounded-lg p-8 max-w-md w-full">
-                        <h2 className="text-2xl font-bold text-[#824058] mb-6">Califique la aplicación</h2>
-                        <form onSubmit={handleSubmit} className="space-y-4">
-                            <div>
-                                <label className="block text-gray-700 mb-2">Nombre *</label>
+                <div className="modal-overlay" onClick={(e) => {
+                    if (e.target.classList.contains('modal-overlay')) {
+                        setShowRatingModal(false);
+                    }
+                }}>
+                    <div className="modal-content">
+                        <h2 className="modal-title">Califique la aplicación</h2>
+                        <button 
+                            className="modal-close"
+                            onClick={() => setShowRatingModal(false)}
+                        >
+                            ✕
+                        </button>
+                        
+                        <form onSubmit={handleSubmit} className="rating-form">
+                            <div className="form-field">
+                                <label>Nombre *</label>
                                 <input
                                     type="text"
                                     name="nombre"
                                     value={formData.nombre}
                                     onChange={handleInputChange}
-                                    className="w-full border rounded-md p-2"
                                     placeholder="Ingrese su nombre"
                                     disabled={isSubmitting}
                                 />
-                                {formErrors.nombre && (
-                                    <p className="text-red-500 text-sm mt-1">{formErrors.nombre}</p>
-                                )}
+                                {formErrors.nombre && <span className="form-error">{formErrors.nombre}</span>}
                             </div>
-
-                            <div>
-                                <label className="block text-gray-700 mb-2">Edad *</label>
+                            
+                            <div className="form-field">
+                                <label>Edad *</label>
                                 <input
                                     type="number"
                                     name="edad"
                                     value={formData.edad}
                                     onChange={handleInputChange}
-                                    className="w-full border rounded-md p-2"
                                     placeholder="Ingrese su edad"
                                     disabled={isSubmitting}
                                 />
-                                {formErrors.edad && (
-                                    <p className="text-red-500 text-sm mt-1">{formErrors.edad}</p>
-                                )}
+                                {formErrors.edad && <span className="form-error">{formErrors.edad}</span>}
                             </div>
-
-                            <div>
-                                <label className="block text-gray-700 mb-2">Sexo</label>
-                                <div className="flex space-x-4">
-                                    {['Masculino', 'Femenino', 'Otro'].map((option) => (
-                                        <label key={option} className="flex items-center space-x-2">
+                            
+                            <div className="form-field">
+                                <label>Sexo</label>
+                                <div className="radio-options">
+                                    {['Masculino', 'Femenino', 'Otro'].map(option => (
+                                        <label key={option} className="radio-option">
                                             <input
                                                 type="radio"
                                                 name="sexo"
                                                 value={option}
                                                 checked={formData.sexo === option}
                                                 onChange={handleInputChange}
-                                                className="text-[#FF6FB0]"
                                                 disabled={isSubmitting}
                                             />
                                             <span>{option}</span>
@@ -257,9 +349,9 @@ const Header = () => {
                                     ))}
                                 </div>
                             </div>
-
-                            <div>
-                                <label className="block text-gray-700 mb-2">Puntaje (1-7) *</label>
+                            
+                            <div className="form-field">
+                                <label>Puntaje (1-7) *</label>
                                 <input
                                     type="number"
                                     name="puntaje"
@@ -267,16 +359,13 @@ const Header = () => {
                                     onChange={handleInputChange}
                                     min="1"
                                     max="7"
-                                    className="w-full border rounded-md p-2"
                                     placeholder="Ingrese un puntaje del 1 al 7"
                                     disabled={isSubmitting}
                                 />
-                                {formErrors.puntaje && (
-                                    <p className="text-red-500 text-sm mt-1">{formErrors.puntaje}</p>
-                                )}
+                                {formErrors.puntaje && <span className="form-error">{formErrors.puntaje}</span>}
                             </div>
-
-                            <div className="flex justify-end space-x-4 mt-6">
+                            
+                            <div className="form-buttons">
                                 <button
                                     type="button"
                                     onClick={() => {
@@ -284,14 +373,14 @@ const Header = () => {
                                         setFormData({ nombre: '', edad: '', sexo: '', puntaje: '' });
                                         setFormErrors({});
                                     }}
-                                    className="px-4 py-2 text-gray-600 hover:text-gray-800"
+                                    className="form-button cancel"
                                     disabled={isSubmitting}
                                 >
                                     Cancelar
                                 </button>
                                 <button
                                     type="submit"
-                                    className="px-4 py-2 bg-[#FF6FB0] text-white rounded-md hover:bg-[#e55a9d] transition-colors disabled:opacity-50"
+                                    className="form-button submit"
                                     disabled={isSubmitting}
                                 >
                                     {isSubmitting ? 'Enviando...' : 'Enviar'}
