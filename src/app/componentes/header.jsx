@@ -10,6 +10,11 @@ import { auth } from '../firebase/firebase.config';
 import '@/app/styles/header.css';
 
 const Header = () => {
+    const getImagePath = (path) => {
+        const basePath = process.env.NODE_ENV === 'production' ? '/primerizos' : '';
+        return `${basePath}${path}`;
+      };
+
     const [user, setUser] = useState(null);
     const [showRatingModal, setShowRatingModal] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -148,7 +153,7 @@ const Header = () => {
                     <div className="menu-logo">
                         <Link href="/">
                             <Image 
-                                src="/inicio/logo.png" 
+                                src={getImagePath('/inicio/logo.png')}
                                 alt="Baby Life" 
                                 width={100} 
                                 height={40} 
@@ -194,7 +199,7 @@ const Header = () => {
                 <div className="mobile-logo">
                     <Link href="/">
                         <Image 
-                            src="/inicio/logo.png" 
+                            src={getImagePath('/inicio/logo.png')}
                             alt="Baby Life" 
                             width={100} 
                             height={40} 
@@ -221,7 +226,7 @@ const Header = () => {
                 <div className="slide-menu-header">
                     <Link href="/" onClick={() => setMobileMenuOpen(false)}>
                         <Image 
-                            src="/inicio/logo.png" 
+                            src={getImagePath('/inicio/logo.png')}
                             alt="Baby Life" 
                             width={100} 
                             height={40} 
