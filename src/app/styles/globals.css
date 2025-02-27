@@ -1,147 +1,21 @@
-/* src/app/styles/globals.css */
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --primary: #FF6FB0;
-  --primary-dark: #e55a9d;
-  --secondary: #824058;
-  --secondary-light: #a46372;
+  --background: #ffffff;
+  --foreground: #171717;
 }
 
-/* Layout Base */
-.main-container {
-  @apply min-h-screen bg-white;
-}
-
-/* Header Styles */
-.header {
-  @apply fixed top-0 left-0 right-0 bg-white shadow-md z-50;
-}
-
-.nav-container {
-  @apply max-w-7xl mx-auto px-4 py-3 flex items-center justify-between;
-}
-
-.logo-container {
-  @apply flex-shrink-0 flex items-center;
-}
-
-.logo {
-  @apply h-12 w-auto md:h-16 transition-transform duration-300 hover:scale-105;
-}
-
-/* Navigation Menu */
-.nav-menu {
-  @apply hidden md:flex items-center space-x-8;
-}
-
-.nav-link {
-  @apply text-black font-semibold hover:text-[--primary] transition-colors
-         text-base md:text-lg tracking-wide;
-}
-
-/* Mobile Menu */
-.mobile-menu-button {
-  @apply md:hidden p-2 rounded-lg hover:bg-gray-100;
-}
-
-.mobile-menu {
-  @apply fixed inset-x-0 top-[60px] bg-white shadow-lg md:hidden
-         transform transition-transform duration-300 ease-in-out;
-}
-
-.mobile-menu.open {
-  @apply translate-y-0;
-}
-
-.mobile-menu.closed {
-  @apply -translate-y-full;
-}
-
-.mobile-nav-items {
-  @apply flex flex-col py-4 px-6 space-y-4;
-}
-
-/* Buttons */
-.button-primary {
-  @apply bg-[--primary] text-white px-4 py-2 rounded-lg font-semibold
-         hover:bg-[--primary-dark] transition-all duration-300
-         text-sm md:text-base;
-}
-
-.button-secondary {
-  @apply bg-blue-500 text-white px-4 py-2 rounded-lg font-semibold
-         hover:bg-blue-600 transition-all duration-300
-         text-sm md:text-base;
-}
-
-/* Footer Styles */
-.footer {
-  @apply bg-gradient-to-r from-[--secondary] to-[--secondary-light] 
-         mt-20 py-12 text-white;
-}
-
-.footer-container {
-  @apply max-w-7xl mx-auto px-4;
-}
-
-.footer-grid {
-  @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12;
-}
-
-.footer-title {
-  @apply text-xl md:text-2xl font-bold text-[--primary] mb-4;
-}
-
-.footer-content {
-  @apply space-y-3 text-sm md:text-base;
-}
-
-.footer-links {
-  @apply space-y-2;
-}
-
-.footer-link {
-  @apply hover:text-[--primary] transition-colors block;
-}
-
-.social-links {
-  @apply flex space-x-4 mt-4;
-}
-
-.social-icon {
-  @apply p-2 rounded-full bg-[--primary] hover:bg-[--primary-dark] 
-         transition-all duration-300 transform hover:scale-110;
-}
-
-/* Responsive Adjustments */
-@media (max-width: 768px) {
-  .nav-container {
-    @apply py-2;
-  }
-  
-  .logo {
-    @apply h-10;
-  }
-  
-  .button-primary, .button-secondary {
-    @apply px-3 py-1.5 text-sm;
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
   }
 }
 
-@media (max-width: 640px) {
-  .footer-grid {
-    @apply gap-6;
-  }
-  
-  .footer-title {
-    @apply text-lg mb-3;
-  }
-  
-  .social-links {
-    @apply justify-center;
-  }
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
 }
